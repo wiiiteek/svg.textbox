@@ -21,6 +21,12 @@ SVG.MText = SVG.invent({
       this.breakLines(this.width());
     },
 
+    aligin: function(value) {
+      if (typeof value === 'undefined') { return this.attr('text-anchor'); }
+      this.attr('text-anchor', value);
+      this.adjustLines();
+    },
+
     line: function(text) {
       if (typeof text === 'undefined') { return; }
 
