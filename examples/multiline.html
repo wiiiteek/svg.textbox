@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SVG multiline test</title>
+    <meta charset="utf-8">
+
+    <style type="text/css">
+        body {
+            font-size: 12px;
+            font-family: Arial;
+        }
+
+        .svg-container {
+            margin: 10px;
+            border: 1px dashed #ccc;
+        }
+
+        svg {
+            border: 1px solid #aca;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="svg-container"></div>
+<div class="text-container">
+    <p>Set text box width:</p>
+    <input class="t-width" type="number", placeholder="200">
+    <a href="#" class="t-width-btn">Change!</a>
+    <br/>
+    
+    <p>Set aligin</p>
+    <a href="#" class="t-aligin" data-anchor="start">Left</a>
+    <a href="#" class="t-aligin" data-anchor="middle">Middle</a>
+    <a href="#" class="t-aligin" data-anchor="end">Right</a>
+</div>
+
+<script type="text/javascript" src="../node_modules/svg.js/dist/svg.js"></script>
+<script type="text/javascript" src="../dist/svg.textbox.js"></script>
+<script type="text/javascript">
+    var draw = null;
+    window.addEventListener('load', function() {
+        SVG.defaults.attrs['font-family'] = 'Arial';
+        SVG.defaults.attrs['font-size'] = '12px';
+        draw = SVG(document.querySelector('.svg-container')).size(500, 500);
+        var rect = draw.rect(50, 50);
+        rect.move(0,0);
+
+        var textBg = draw.rect(200, 400).fill("#FFFEED");
+        textBg.move(50,50);
+
+        var t = draw.mtext();
+        // t.attr('text-anchor', 'middle');
+        t.move(50,50);
+        t.line(function(add) {
+            add.text("Some plain text (will be wrapped into tspan automatically)");
+            add.tspan("I am trying to make this line as long as I can. And of course it can contain different font formating").fill('#9c00cc');
+            add.tspan("(like bigger font.) ").fill('#229d22').font('size', 16);
+            add.tspan("BTW. I like to drink cofee").fill('#295B99');
+        });
+        t.line(function(add) {
+            add.tspan("This is separate line. ").fill('#33fa44');
+            add.tspan("here begins and goes on with really big font").font('size', 30).fill('#45cc4b');
+        });
+        t.line("You can also pass text using line() method with string as a argument");
+        t.line("Just check code of this page!");
+
+        document.querySelector('.t-width-btn').addEventListener('click', function() {
+            var input = document.querySelector('.t-width');
+            var width = parseInt(input.value);
+            if (width > 0) {
+                t.width(width);
+                textBg.width(width);
+            }
+        });
+
+        var aliginBtns = document.querySelectorAll('.t-aligin');
+        for (var i = 0; i < aliginBtns.length; i++) {
+            
+            aliginBtns[i].addEventListener('click', function() {
+                t.aligin(this.getAttribute('data-anchor'));
+            });
+        }
+
+    });
+</script>
+</body>
+</html>
