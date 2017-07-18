@@ -24,6 +24,18 @@ SVG.MText = SVG.invent({
       this.adjustLines();
     },
 
+    clear: function() {
+      while (this.node.hasChildNodes())
+        this.node.removeChild(this.node.lastChild);
+
+      return this;
+    },
+
+    /**
+     * Starts new text line. Creates new tspan marked as "newline"
+     * @param  {String|Function} text
+     * @return {SVG.Tspan}       tspan line instance
+     */
     line: function(text) {
       if (typeof text === 'undefined') { return; }
 
@@ -39,6 +51,8 @@ SVG.MText = SVG.invent({
 
       this.breakLine(span, this.width());
       this.adjustLines();
+
+      return span;
     },
 
     adjustLines: function() {
