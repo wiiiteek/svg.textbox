@@ -1,0 +1,30 @@
+{
+  "name": "svg.textbox.js",
+  "version": "1.0.0",
+  "description": "svgjs plugin which allows to create multiline text fields with word wrap ",
+  "main": "dist/svg.textbox.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wiiiteek/svg.textbox.git"
+  },
+  "keywords": [
+    "svg.js",
+    "text",
+    "textbox"
+  ],
+  "author": "Wiktor Koźmiński",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wiiiteek/svg.textbox/issues"
+  },
+  "homepage": "https://github.com/wiiiteek/svg.textbox#readme",
+  "devDependencies": {
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-uglify": "~0.2.0",
+    "grunt-contrib-clean": "~0.4.0",
+    "grunt": "~0.4.5"
+  },
+  "dependencies": {
+    "svg.js":"^2.0.1"
+  }
+}
