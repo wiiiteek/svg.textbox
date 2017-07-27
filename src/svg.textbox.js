@@ -7,6 +7,7 @@ SVG.MText = SVG.invent({
 
     var defaultSize = SVG.defaults.attrs['font-size'] ? SVG.defaults.attrs['font-size'] : '12px';
     this.attr('font-size', defaultSize);
+    this.attr('multiline', true);
   },
 
   inherit: SVG.Shape,
@@ -292,15 +293,55 @@ SVG.MText = SVG.invent({
 
   construct: {
     mtext: function() {
-      return this.put(new SVG.MText()).attr('multiline', true);
+      return this.put(new SVG.MText());
     }
   }
 });
 
 SVG.extend(SVG.MText, {
   move: function(x, y) {
-    this.x(x).y(y);
+    return this.x(x).y(y);
+  },
+
+  x: function(x) {
+    this.attr('x', x);
+    if (this.adjustLines) { this.adjustLines(); }
+    return this;
+  },
+
+  y: function(y) {
+    this.attr('y', y);
     if (this.adjustLines) { this.adjustLines(); }
     return this;
   }
 });
+
+/**
+ * Adopts SVG text element with multiline attr as
+ * MText instance.
+ * Normal <text> will not be adopted.
+ *
+ * @todo separate method to converts normal text to mtext
+ *
+ * @param {HTMLElement} node to adopt
+ */
+SVG.AdoptMText = function(node) {
+  if (!node || node.nodeName != 'text') return null;
+
+  // attr multiline means that <text> was mbox indeed
+  if (!node.getAttribute("multiline")) return null;
+
+  if (node.instance && node.instance instanceof SVG.MText) return node.instance;
+
+  var element = new SVG.MText();
+
+  element.type  = node.nodeName;
+  element.node  = node;
+  node.instance = element;
+
+  console.log(element);
+
+  element.setData(JSON.parse(node.getAttribute('svgjs:data')) || {});
+
+  return element;
+};
