@@ -21,17 +21,38 @@ SVG.MText = SVG.invent({
       if (typeof value === 'undefined') { return this.data('text-width'); }
       this.data('text-width', value);
       this.breakLines(this.width());
+      return this;
     },
 
     aligin: function(value) {
       if (typeof value === 'undefined') { return this.attr('text-anchor'); }
       this.attr('text-anchor', value);
       this.adjustLines();
+      return this;
     },
 
     clear: function() {
       while (this.node.hasChildNodes())
         this.node.removeChild(this.node.lastChild);
+
+      return this;
+    },
+
+    text: function(text) {
+      if (typeof text === 'undefined') {
+        var t = "";
+        this.lines().each(function() {
+          t += this.node.textContent + "\n";
+        });
+
+        return t;
+      }
+
+      this.clear();
+
+      var lines = text.split('\n');
+      for (var i = 0, il = lines.length; i < il; i++)
+        this.line(lines[i]);
 
       return this;
     },
@@ -292,6 +313,7 @@ SVG.MText = SVG.invent({
       if (value === null) return this.dom.lineHeight;
       this.dom.lineHeight = new SVG.Number(value);
       this.adjustLines();
+      return this;
     }
   },
 
@@ -308,12 +330,14 @@ SVG.extend(SVG.MText, {
   },
 
   x: function(x) {
+    if (typeof x === 'undefined') return this.attr('x');
     this.attr('x', x);
     if (this.adjustLines) { this.adjustLines(); }
     return this;
   },
 
   y: function(y) {
+    if (typeof y === 'undefined') return this.attr('y');
     this.attr('y', y);
     if (this.adjustLines) { this.adjustLines(); }
     return this;
