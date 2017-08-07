@@ -73,8 +73,23 @@ SVG.MText = SVG.invent({
 
       this.breakLine(span, this.width());
       this.adjustLines();
+      this.trimLines();
 
       return span;
+    },
+
+    trimLines: function() {
+      this.lines().each(function() {
+        var f = this.node.firstChild;
+        if (f) {
+          f.innerHTML = f.innerHTML.replace(/^\s+/, "");
+        }
+
+        var l = this.node.lastElementChild;
+        if (l) {
+          l.innerHTML = l.innerHTML.replace(/\s+$/, "");
+        }
+      });
     },
 
     adjustLines: function() {
@@ -109,6 +124,7 @@ SVG.MText = SVG.invent({
         _self.breakLine(this, width);
       });
       this.adjustLines();
+      this.trimLines();
     },
 
     /**
