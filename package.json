@@ -1,6 +1,6 @@
 {
   "name": "svg.textbox.js",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "svgjs plugin which allows to create multiline text fields with word wrap ",
   "main": "dist/svg.textbox.js",
   "repository": {

@@ -1,4 +1,4 @@
-/*! svg.textbox.js - v0.9.0 - 2017-08-07
+/*! svg.textbox.js - v0.9.1 - 2017-08-25
 * https://github.com/wiiiteek/svg.textbox#readme
 * Copyright (c) 2017 Wiktor Koźmiński
 * Licensed MIT */
@@ -24,7 +24,7 @@ SVG.MText = SVG.invent({
       return this;
     },
 
-    aligin: function(value) {
+    align: function(value) {
       if (typeof value === 'undefined') { return this.attr('text-anchor'); }
       this.attr('text-anchor', value);
       this.adjustLines();
@@ -278,7 +278,7 @@ SVG.MText = SVG.invent({
         var targetSpan = SVG.get(span.data('connected-with-line'));
         if (!targetSpan) continue;
 
-        targetSpan.node.innerHTML = span.node.innerHTML + targetSpan.node.innerHTML;
+        targetSpan.node.innerHTML = span.node.innerHTML + ' ' + targetSpan.node.innerHTML;
         span.node.remove();
       }
     },

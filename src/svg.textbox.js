@@ -20,7 +20,7 @@ SVG.MText = SVG.invent({
       return this;
     },
 
-    aligin: function(value) {
+    align: function(value) {
       if (typeof value === 'undefined') { return this.attr('text-anchor'); }
       this.attr('text-anchor', value);
       this.adjustLines();
@@ -274,7 +274,7 @@ SVG.MText = SVG.invent({
         var targetSpan = SVG.get(span.data('connected-with-line'));
         if (!targetSpan) continue;
 
-        targetSpan.node.innerHTML = span.node.innerHTML + targetSpan.node.innerHTML;
+        targetSpan.node.innerHTML = span.node.innerHTML + ' ' + targetSpan.node.innerHTML;
         span.node.remove();
       }
     },
