@@ -290,7 +290,7 @@ SVG.MText = SVG.invent({
         var n = childs[i];
         if (n.nodeName !== '#text') { continue; }
         var tmp = SVG.create('tspan');
-        console.log('Text wprapped: ' + n.textContent);
+        // console.log('Text wprapped: ' + n.textContent);
         tmp.innerHTML = n.textContent;
         tspanLine.node.replaceChild(tmp, n);
       }
@@ -298,11 +298,14 @@ SVG.MText = SVG.invent({
 
     // search recursive through all child nodes and return biggest font size in px as number
     getBiggestFont: function(line) {
-      var biggestFont = parseInt(getComputedStyle(line.node)['font-size']);
+      var biggestFont = 0;
       var childs = SVG.utils.filterSVGElements(line.node.childNodes);
 
       for (var i = childs.length - 1; i >= 0; i--) {
-        var f = this.getBiggestFont(SVG.adopt(childs[i]));
+        if (childs[i].innerHTML.length < 1) continue;
+        var fch = this.getBiggestFont(SVG.adopt(childs[i]));
+        var fpa = parseInt(getComputedStyle(childs[i])['font-size']);
+        var f = fpa > fch ? fpa : fch;
         biggestFont = f > biggestFont ? f : biggestFont;
       }
 
@@ -377,7 +380,7 @@ SVG.AdoptMText = function(node) {
   element.node  = node;
   node.instance = element;
 
-  console.log(element);
+  // console.log(element);
 
   element.setData(JSON.parse(node.getAttribute('svgjs:data')) || {});
 
