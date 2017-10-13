@@ -59,15 +59,13 @@ SVG.MText = SVG.invent({
      * @return {SVG.Tspan}       tspan line instance
      */
     line: function(text) {
-      if (typeof text === 'undefined') { return; }
-
       var span = new SVG.Tspan();
       span.attr('newline', true);
       this.node.appendChild(span.node);
       
       if (typeof text === 'function') {
         text.call(this, span);
-      } else {
+      } else if (typeof text !== 'undefined' && text.length > 0) {
         span.tspan(text);
       }
 
